@@ -17,9 +17,26 @@ cd %1.Application
 ..\fart %PROJETO_PADRAO%.Application.csproj "<AssemblyName>%PROJETO_PADRAO%." "<AssemblyName>%1."
 ..\fart %PROJETO_PADRAO%.Application.csproj "%PROJETO_PADRAO%.Domain" "%1.Domain"
 
-..\fart Common\Behaviors\ValidationBehavior.cs "%PROJETO_PADRAO%." "%1."
+..\fart Common\Behaviors\ValidatorBehavior.cs "%PROJETO_PADRAO%." "%1."
 ..\fart Common\Exceptions\BadRequestException.cs "%PROJETO_PADRAO%." "%1."
 ..\fart Common\Exceptions\NotFoundException.cs "%PROJETO_PADRAO%." "%1."
+
+..\fart Features\UserFeatures\CreateUser\CreateUserHandler.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\CreateUser\CreateUserMapper.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\CreateUser\CreateUserRequest.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\CreateUser\CreateUserResponse.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\CreateUser\CreateUserValidator.cs "%PROJETO_PADRAO%." "%1."
+
+..\fart Features\UserFeatures\GetAllUser\GetAllUserHandler.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\GetAllUser\GetAllUserMapper.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\GetAllUser\GetAllUserRequest.cs "%PROJETO_PADRAO%." "%1."
+..\fart Features\UserFeatures\GetAllUser\GetAllUserResponse.cs "%PROJETO_PADRAO%." "%1."
+
+..\fart Repositories\IBaseRepository.cs "%PROJETO_PADRAO%." "%1."
+..\fart Repositories\IUnitOfWork.cs "%PROJETO_PADRAO%." "%1."
+..\fart Repositories\IUserRepository.cs "%PROJETO_PADRAO%." "%1."
+
+
 ren %PROJETO_PADRAO%.Application.csproj %1%.Application.csproj
 cd ..
 
@@ -52,7 +69,7 @@ cd ..
 cd %1.Persistence
 ..\fart %PROJETO_PADRAO%.Persistence.csproj "<RootNamespace>%PROJETO_PADRAO%." "<RootNamespace>%1."
 ..\fart %PROJETO_PADRAO%.Persistence.csproj "<AssemblyName>%PROJETO_PADRAO%." "<AssemblyName>%1."
-..\fart %PROJETO_PADRAO%.Persistence.csproj "%PROJETO_PADRAO%.Domain" "%1.Domain"
+..\fart %PROJETO_PADRAO%.Persistence.csproj "%PROJETO_PADRAO%.Application" "%1.Application"
 
 ..\fart Context\DataContext.cs "%PROJETO_PADRAO%." "%1."
 ..\fart Repositories\BaseRepository.cs "%PROJETO_PADRAO%." "%1."
@@ -67,15 +84,14 @@ cd %1.UnitTest
 ..\fart %PROJETO_PADRAO%.UnitTest.csproj "<RootNamespace>%PROJETO_PADRAO%." "<RootNamespace>%1."
 ..\fart %PROJETO_PADRAO%.UnitTest.csproj "<AssemblyName>%PROJETO_PADRAO%." "<AssemblyName>%1."
 ..\fart %PROJETO_PADRAO%.UnitTest.csproj "%PROJETO_PADRAO%.Application" "%1.Application"
+..\fart %PROJETO_PADRAO%.UnitTest.csproj "%PROJETO_PADRAO%.Domain" "%1.Domain"
 
 ren %PROJETO_PADRAO%.UnitTest.csproj %1%.UnitTest.csproj
 cd ..
 
-cd ..
-..\fart compile.bat ".\%PROJETO_PADRAO%.WebApi" ".\%1.WebApi"
 
 del fart.exe
-del boilerplate.bat
+del clean_architecture_bootstrap.bat
 del criaProjeto.bat
 
 REM Sai do diretorio ProjetoPadrao
