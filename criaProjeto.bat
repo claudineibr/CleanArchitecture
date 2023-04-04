@@ -36,6 +36,7 @@ cd %1.Application
 ..\fart Repositories\IUnitOfWork.cs "%PROJETO_PADRAO%." "%1."
 ..\fart Repositories\IUserRepository.cs "%PROJETO_PADRAO%." "%1."
 
+..\fart ServiceExtensions.cs "%PROJETO_PADRAO%." "%1."
 
 ren %PROJETO_PADRAO%.Application.csproj %1%.Application.csproj
 cd ..
