@@ -93,6 +93,7 @@ cd ..
 
 del fart.exe
 del clean_architecture_bootstrap.bat
+del clean_architecture_bootstrap_local.bat
 del criaProjeto.bat
 
 REM Sai do diretorio ProjetoPadrao
