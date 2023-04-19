@@ -6,7 +6,7 @@ ren %PROJETO_PADRAO%.Application %1.Application
 ren %PROJETO_PADRAO%.Domain %1.Domain
 ren %PROJETO_PADRAO%.Persistence %1.Persistence
 ren %PROJETO_PADRAO%.UnitTest %1.UnitTest
-ren %PROJETO_PADRAO%.WebApi %1.WebApi
+ren %PROJETO_PADRAO%.WebAPI %1.WebAPI
 
 fart %PROJETO_PADRAO%.sln "%PROJETO_PADRAO%." "%1."
 fart .gitignore "%PROJETO_PADRAO%." "%1."
@@ -50,11 +50,11 @@ cd %1.Domain
 ren %PROJETO_PADRAO%.Domain.csproj %1%.Domain.csproj
 cd ..
 
-cd %1.WebApi
-..\fart %PROJETO_PADRAO%.WebApi.csproj "<RootNamespace>%PROJETO_PADRAO%." "<RootNamespace>%1."
-..\fart %PROJETO_PADRAO%.WebApi.csproj "<AssemblyName>%PROJETO_PADRAO%." "<AssemblyName>%1."
-..\fart %PROJETO_PADRAO%.WebApi.csproj "%PROJETO_PADRAO%.Application" "%1.Application"
-..\fart %PROJETO_PADRAO%.WebApi.csproj "%PROJETO_PADRAO%.Persistence" "%1.Persistence"
+cd %1.WebAPI
+..\fart %PROJETO_PADRAO%.WebAPI.csproj "<RootNamespace>%PROJETO_PADRAO%." "<RootNamespace>%1."
+..\fart %PROJETO_PADRAO%.WebAPI.csproj "<AssemblyName>%PROJETO_PADRAO%." "<AssemblyName>%1."
+..\fart %PROJETO_PADRAO%.WebAPI.csproj "%PROJETO_PADRAO%.Application" "%1.Application"
+..\fart %PROJETO_PADRAO%.WebAPI.csproj "%PROJETO_PADRAO%.Persistence" "%1.Persistence"
 
 ..\fart Web.config "%PROJETO_PADRAO%." "%1."
 ..\fart Dockerfile "%PROJETO_PADRAO%." "%1."
@@ -64,7 +64,7 @@ cd %1.WebApi
 ..\fart Extensions\CorsPolicyExtensions.cs "%PROJETO_PADRAO%." "%1."
 ..\fart Extensions\ErrorHandlerExtensions.cs "%PROJETO_PADRAO%." "%1."
 
-ren %PROJETO_PADRAO%.WebApi.csproj %1%.WebApi.csproj
+ren %PROJETO_PADRAO%.WebAPI.csproj %1%.WebAPI.csproj
 cd ..
 
 cd %1.Persistence
