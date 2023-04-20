@@ -1,4 +1,12 @@
-# defaulttemplate
-This project is default template based in pattern TDD
+# Clean Architecture Template
 
-Execute bootstrap.bat and add solution name
+This Project using CQRS with MediatR in .NET 7.0
+
+### 
+- [x] .NET 7.0
+- [x] MediatR 
+- [x] Swagger 
+- [x] AutoMapper 
+
+
+Execute clean_architecture_bootstrap.bat to create new project with solution name

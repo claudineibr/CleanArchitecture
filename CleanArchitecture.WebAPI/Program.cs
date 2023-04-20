@@ -5,11 +5,18 @@ using CleanArchitecture.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigurePersistence(builder.Configuration);
-builder.Services.ConfigureApplication();
+builder.Host.ConfigureAppConfiguration((hostContext, config) =>
+{
+    config.Sources.Clear();
+    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+    config.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+    config.AddEnvironmentVariables();
+});
 
+builder.Services.ConfigurePersistence(builder.Configuration, builder.Environment.IsDevelopment());
+builder.Services.ConfigureApplication();
 builder.Services.ConfigureApiBehavior();
-builder.Services.ConfigureCorsPolicy();
+builder.Services.ConfigureCorsPolicy(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

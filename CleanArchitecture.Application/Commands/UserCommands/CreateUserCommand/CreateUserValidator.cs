@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace CleanArchitecture.Application.Features.UserFeatures.CreateUser;
+namespace CleanArchitecture.Application.Commands.UserCommands.CreateUserCommand;
 
-public sealed class CreateUserValidator : AbstractValidator<CreateUserRequest>
+public sealed class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserValidator()
     {

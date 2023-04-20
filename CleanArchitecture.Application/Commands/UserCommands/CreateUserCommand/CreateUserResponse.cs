@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Application.Features.UserFeatures.CreateUser;
+﻿namespace CleanArchitecture.Application.Commands.UserCommands.CreateUserCommand;
 
 public sealed record CreateUserResponse
 {

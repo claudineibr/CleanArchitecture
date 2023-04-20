@@ -1,9 +1,9 @@
-set /p NomeProjeto="Informe o nome do projeto:"
+set /p ProjectName="Project Name:"
 
 echo mkdir CleanArchitecture
 
 robocopy .\CleanArchitectureTemplate .\CleanArchitecture /E
 
-copy .\CleanArchitecture\criaProjeto.bat
-cmd /C criaProjeto.bat %NomeProjeto%
-del criaProjeto.bat
+copy .\CleanArchitecture\CreateProject.bat
+cmd /C CreateProject.bat %ProjectName%
+del CreateProject.bat

@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Features.UserFeatures.CreateUser;
-using CleanArchitecture.Application.Features.UserFeatures.GetAllUser;
+﻿using CleanArchitecture.Application.Commands.UserCommands.CreateUserCommand;
+using CleanArchitecture.Application.Queries.UserQueries.GetAllUserQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +19,12 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<GetAllUserResponse>>> GetAll(CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetAllUserRequest(), cancellationToken);
+        var response = await _mediator.Send(new GetAllUserQuery(), cancellationToken);
         return Ok(response);
     }
     
     [HttpPost]
-    public async Task<ActionResult<CreateUserResponse>> Create(CreateUserRequest request,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<CreateUserResponse>> Create(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
         return Ok(response);

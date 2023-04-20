@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Domain.Entities;
 
-namespace CleanArchitecture.Application.Features.UserFeatures.GetAllUser;
+namespace CleanArchitecture.Application.Queries.UserQueries.GetAllUserQuery;
 
 public sealed class GetAllUserMapper : Profile
 {

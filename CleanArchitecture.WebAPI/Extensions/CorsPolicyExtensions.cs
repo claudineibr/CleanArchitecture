@@ -2,14 +2,18 @@
 
 public static class CorsPolicyExtensions
 {
-    public static void ConfigureCorsPolicy(this IServiceCollection services)
+    public static void ConfigureCorsPolicy(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddCors(opt =>
+        string[] corsOrigin = configuration.GetSection("CorsOrigin").Get<string[]>();
+        services.AddCors(options =>
         {
-            opt.AddDefaultPolicy(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins(corsOrigin)
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
         });
     }
 }

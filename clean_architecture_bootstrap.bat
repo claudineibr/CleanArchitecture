@@ -1,4 +1,4 @@
-set /p NomeProjeto="Informe o nome do projeto:"
+set /p ProjectName="Project Name:"
 echo mkdir CleanArchitecture > .\git_clone.sh
 echo cd CleanArchitecture >> git_clone.sh
 echo git clone https://github.com/claudineibr/CleanArchitecture.git . >> git_clone.sh
@@ -16,6 +16,6 @@ if exist "%SYSTEMDRIVE%\Program Files (x86)\Git\bin\sh.exe" (
 
 %GitEXE% --login git_clone.sh
 del git_clone.sh
-copy .\CleanArchitecture\criaProjeto.bat
-cmd /C criaProjeto.bat %NomeProjeto%
-del criaProjeto.bat
+copy .\CleanArchitecture\CreateProject.bat
+cmd /C CreateProject.bat %ProjectName%
+del CreateProject.bat

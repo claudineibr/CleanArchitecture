@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Application.Features.UserFeatures.GetAllUser;
+﻿namespace CleanArchitecture.Application.Queries.UserQueries.GetAllUserQuery;
 
 public sealed record GetAllUserResponse
 {
