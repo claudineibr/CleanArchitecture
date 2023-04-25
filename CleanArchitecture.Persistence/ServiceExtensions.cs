@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Repositories;
 using CleanArchitecture.Persistence.Context;
 using CleanArchitecture.Persistence.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

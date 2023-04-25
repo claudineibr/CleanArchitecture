@@ -7,6 +7,7 @@ This Project using CQRS with MediatR in .NET 7.0
 - [x] MediatR 
 - [x] Swagger 
 - [x] AutoMapper 
+- [x] Serilog 
 
 
 Execute clean_architecture_bootstrap.bat to create new project with solution name

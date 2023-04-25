@@ -72,9 +72,12 @@ cd %1.WebAPI
 ..\fart Dockerfile "%DEFAULT_PROJECT%." "%1."
 ..\fart Program.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Controllers\UserController.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart Extensions\ApiBehaviorExtensions.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Extensions\CorsPolicyExtensions.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Extensions\ErrorHandlerExtensions.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Extensions\ServiceExtensions.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart Properties\launchSettings.json "%DEFAULT_PROJECT%." "%1."
 
 ren %DEFAULT_PROJECT%.WebAPI.csproj %1%.WebAPI.csproj

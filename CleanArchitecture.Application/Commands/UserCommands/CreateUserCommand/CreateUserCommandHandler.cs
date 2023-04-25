@@ -27,6 +27,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
         _userRepository.Create(user);
         await _unitOfWork.Save(cancellationToken);
 
+        //send syncronos 
         await _mediator.Publish(new SendEmailNotification { Email = request.Email }, cancellationToken);
 
         return _mapper.Map<CreateUserResponse>(user);
