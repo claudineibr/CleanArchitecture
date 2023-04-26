@@ -93,9 +93,13 @@ cd %1.Persistence
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "%DEFAULT_PROJECT%.Application" "%1.Application"
 
 ..\fart Context\DataContext.cs "%DEFAULT_PROJECT%." "%1."
+
+..\fart EntityConfiguration\UserEntityConfiguration.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart Repositories\BaseRepository.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Repositories\UnitOfWork.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Repositories\UserRepository.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart ServiceExtensions.cs "%DEFAULT_PROJECT%." "%1."
 
 ren %DEFAULT_PROJECT%.Persistence.csproj %1%.Persistence.csproj

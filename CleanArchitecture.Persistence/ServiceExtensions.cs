@@ -1,7 +1,6 @@
 ﻿using CleanArchitecture.Application.Repositories;
 using CleanArchitecture.Persistence.Context;
 using CleanArchitecture.Persistence.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,9 +12,6 @@ public static class ServiceExtensions
 {
     public static void ConfigurePersistence(this IServiceCollection services, IConfiguration configuration, bool isDevelopment)
     {
-        var connectionString = configuration.GetConnectionString("Sqlite");
-        services.AddDbContext<DataContext>(opt => opt.UseSqlite(connectionString));
-
         services.AddDbContext<DataContext>((IServiceProvider sp, DbContextOptionsBuilder builder) =>
         {
             builder.UseSqlite(configuration.GetConnectionString("Sqlite"));

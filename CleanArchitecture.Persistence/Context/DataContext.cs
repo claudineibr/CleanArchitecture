@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Persistence.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Persistence.Context;
@@ -9,5 +10,10 @@ public class DataContext : DbContext
     {
     }
 
-    public DbSet<User> Users { get; set; }
+    public DbSet<User> User { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+    }
 }
