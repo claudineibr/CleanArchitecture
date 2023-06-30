@@ -14,7 +14,7 @@ public static class ServiceExtensions
     {
         services.AddDbContext<DataContext>((IServiceProvider sp, DbContextOptionsBuilder builder) =>
         {
-            builder.UseSqlite(configuration.GetConnectionString("Sqlite"));
+            BuilderDataBase(configuration, builder);
             builder.LogTo(Console.WriteLine, LogLevel.Information);
             builder.EnableDetailedErrors(isDevelopment);
             builder.EnableSensitiveDataLogging(isDevelopment);
@@ -22,5 +22,21 @@ public static class ServiceExtensions
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+    }
+
+    private static void BuilderDataBase(IConfiguration configuration, DbContextOptionsBuilder builder)
+    {
+        string connectionString = configuration["ConnectionString"];
+
+        if (string.IsNullOrEmpty(connectionString))
+            connectionString = configuration.GetConnectionString("Default");
+
+        if (configuration["ServeDataBase"] == "MYSQL")
+        {
+            builder.UseSqlite(connectionString);
+            return;
+        }
+
+        builder.UseNpgsql(connectionString);
     }
 }
