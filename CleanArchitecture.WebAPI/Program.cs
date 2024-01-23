@@ -1,13 +1,3 @@
-using CleanArchitecture.Application;
-using CleanArchitecture.Persistence;
-using CleanArchitecture.Persistence.Context;
-using CleanArchitecture.WebAPI.Extensions;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Serilog;
-using System.Net;
-
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
@@ -22,8 +12,13 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.AddSerilog(AppName);
 
+//builder.AddServiceDefaults();
 
+builder.Services.AddHealthChecks();
 builder.Services.ConfigurePersistence(builder.Configuration, builder.Environment.IsDevelopment());
+
+//builder.Services.AddCustomAuthentication(builder.Configuration);
+
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureApiBehavior();
 builder.Services.ConfigureCorsPolicy(builder.Configuration);
@@ -36,7 +31,27 @@ builder.Services.AddGrpc(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Service - Service HTTP API",
+        Version = "v1",
+        Description = "The Management Service HTTP API",
+        Contact = new OpenApiContact()
+        {
+            Name = "Claudinei Nascimento",
+            Email = "claudinei@nascorp.com.br"
+        },
+        License = new OpenApiLicense()
+        {
+            Name = "Apache 2.0",
+            Url = new Uri("http://www.apache.org/licenses/LICENSE-2.0.html")
+        }
+    });
+});
+
 
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -56,54 +71,47 @@ builder.WebHost.ConfigureKestrel(options =>
 var app = builder.Build();
 
 var pathBase = app.Configuration["PATH_BASE"];
-if (!string.IsNullOrEmpty(pathBase))
-{
-    app.UsePathBase(pathBase);
-}
 
-app.UseSwagger();
-app.UseSwaggerUI();
+//app.UseServiceDefaults();
+
+app.UseSwagger().UseSwaggerUI(setup =>
+{
+    setup.SwaggerEndpoint($"{(!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty)}/swagger/v1/swagger.json", "Service.API V1");
+    setup.OAuthAppName("Management Swagger UI");
+});
+
+app.UseRouting();
 app.UseErrorHandler();
+//app.ConfigureCustomExceptionMiddleware();
 app.UseCors();
+
+
+// Configure GRPC Services
+
+
+app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
+app.UseAuthorization();
+
+app.MapDefaultControllerRoute();
 app.MapControllers();
-
-
-app.MapHealthChecks("/health", new HealthCheckOptions()
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
-
-app.MapGet("/_proto/", async ctx =>
-{
-    ctx.Response.ContentType = "text/plain";
-    using var fs = new FileStream(Path.Combine(app.Environment.ContentRootPath, "Proto", "navigation.proto"), FileMode.Open, FileAccess.Read);
-    using var sr = new StreamReader(fs);
-    while (!sr.EndOfStream)
-    {
-        var line = await sr.ReadLineAsync();
-        if (line != "/* >>" || line != "<< */")
-        {
-            await ctx.Response.WriteAsync(line);
-        }
-    }
-});
 
 try
 {
-    Log.Information("Configuring web host ({ApplicationContext})...", AppName);
+    app.Logger.LogInformation("Configuring web host ({ApplicationContext})...", AppName);
     var serviceScope = app.Services.CreateScope();
     var dataContext = serviceScope.ServiceProvider.GetService<DataContext>();
-    dataContext?.Database.EnsureCreated();
+    dataContext?.Database.MigrateAsync();
     app.Logger.LogInformation("Starting web host ({ApplicationName})...", AppName);
-
+    var logger = app.Services.GetService<ILogger<DataContextSeed>>();
+    
+    await new DataContextSeed().SeedAsync(context: dataContext, logger: logger);
     await app.RunAsync();
 
     return 0;
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", AppName);
+    app.Logger.LogError(ex, "Program terminated unexpectedly ({ApplicationContext})!", AppName);
     return 1;
 }
 finally
@@ -111,10 +119,10 @@ finally
     Log.CloseAndFlush();
 }
 
-(int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
+static (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
 {
-    var grpcPort = config.GetValue("GRPC_PORT", 5001);
-    var port = config.GetValue("PORT", 80);
+    var grpcPort = config.GetValue("GRPC_PORT", 9101);
+    var port = config.GetValue("PORT", 5101);
     return (port, grpcPort);
 }
 

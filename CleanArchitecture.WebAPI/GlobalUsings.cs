@@ -1,0 +1,9 @@
+﻿global using CleanArchitecture.Application;
+global using CleanArchitecture.Persistence;
+global using CleanArchitecture.Persistence.Context;
+global using CleanArchitecture.WebAPI.Extensions;
+global using Microsoft.AspNetCore.Server.Kestrel.Core;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;
+global using Serilog;
+global using System.Net;

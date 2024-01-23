@@ -70,6 +70,7 @@ cd %1.WebAPI
 
 ..\fart Web.config "%DEFAULT_PROJECT%." "%1."
 ..\fart Dockerfile "%DEFAULT_PROJECT%." "%1."
+..\fart GlobalUsings.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Program.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Controllers\UserController.cs "%DEFAULT_PROJECT%." "%1."
 
@@ -92,14 +93,15 @@ cd %1.Persistence
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "<AssemblyName>%DEFAULT_PROJECT%." "<AssemblyName>%1."
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "%DEFAULT_PROJECT%.Application" "%1.Application"
 
+..\fart Context\DataContextSeed.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Context\DataContext.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart EntityConfiguration\UserEntityConfiguration.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart Repositories\BaseRepository.cs "%DEFAULT_PROJECT%." "%1."
-..\fart Repositories\UnitOfWork.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Repositories\UserRepository.cs "%DEFAULT_PROJECT%." "%1."
 
+..\fart GlobalUsings.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart ServiceExtensions.cs "%DEFAULT_PROJECT%." "%1."
 
 ren %DEFAULT_PROJECT%.Persistence.csproj %1%.Persistence.csproj

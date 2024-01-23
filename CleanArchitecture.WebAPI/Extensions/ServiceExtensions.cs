@@ -15,7 +15,7 @@ public static class ServiceExtensions
             .Enrich.WithExceptionDetails()
             .Enrich.WithProperty("ApplicationName", $"{applicationName}")
             .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore.StaticFiles"))
-            .WriteTo.File($"logs\\{applicationName}.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 5000000 * 10, outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+            .WriteTo.File($"logs/{applicationName}.txt", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 5000000 * 10, outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
             .CreateLogger();
 
         builder.Logging.ClearProviders();
