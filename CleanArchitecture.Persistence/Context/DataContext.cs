@@ -1,11 +1,4 @@
-﻿using CleanArchitecture.Application.Repositories;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Persistence.EntityConfiguration;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-
-namespace CleanArchitecture.Persistence.Context;
+﻿namespace CleanArchitecture.Persistence.Context;
 
 public class DataContext : DbContext, IUnitOfWork
 {

@@ -1,7 +1,4 @@
-﻿using Polly;
-using Polly.Retry;
-
-namespace CleanArchitecture.Persistence.Context;
+﻿namespace CleanArchitecture.Persistence.Context;
 
 public class DataContextSeed
 {

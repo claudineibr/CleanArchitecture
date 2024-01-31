@@ -93,8 +93,8 @@ cd %1.Persistence
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "<AssemblyName>%DEFAULT_PROJECT%." "<AssemblyName>%1."
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "%DEFAULT_PROJECT%.Application" "%1.Application"
 
-..\fart Context\DataContextSeed.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Context\DataContext.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Context\DataContextSeed.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart EntityConfiguration\UserEntityConfiguration.cs "%DEFAULT_PROJECT%." "%1."
 

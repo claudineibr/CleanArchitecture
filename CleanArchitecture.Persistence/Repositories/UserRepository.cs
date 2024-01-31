@@ -8,6 +8,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     
     public Task<User> GetByEmail(string email, CancellationToken cancellationToken)
     {
-        return Context.User.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        return _context.User.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
     }
 }
