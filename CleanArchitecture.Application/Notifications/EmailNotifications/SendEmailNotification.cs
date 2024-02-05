@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿namespace CleanArchitecture.Application.Notifications.EmailNotifications;
 
-namespace CleanArchitecture.Application.Notifications.EmailNotifications
+public class SendEmailNotification : BaseEvent
 {
-    public class SendEmailNotification : INotification
+    public SendEmailNotification(string email)
     {
-        public string Email { get; set; }
+        Email = email;
     }
+    public string Email { get; private set; }
 }

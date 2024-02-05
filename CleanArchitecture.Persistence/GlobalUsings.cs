@@ -1,8 +1,10 @@
 ﻿global using CleanArchitecture.Application.Repositories;
 global using CleanArchitecture.Domain.Common;
 global using CleanArchitecture.Domain.Entities;
+global using CleanArchitecture.Persistence.Common;
 global using CleanArchitecture.Persistence.Context;
 global using CleanArchitecture.Persistence.EntityConfiguration;
+global using CleanArchitecture.Persistence.Interceptors;
 global using CleanArchitecture.Persistence.Repositories;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;

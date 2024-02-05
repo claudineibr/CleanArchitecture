@@ -1,6 +1,4 @@
-﻿using CleanArchitecture.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitecture.Persistence.EntityConfiguration
 {
@@ -10,7 +8,7 @@ namespace CleanArchitecture.Persistence.EntityConfiguration
         {
             builder.ToTable(typeof(User).Name);
             builder.HasKey(x => x.Id);
-            builder.Property(c => c.Id).HasMaxLength(40);
+            builder.Property(c => c.Id).ValueGeneratedOnAdd();
             builder.Property(c => c.Name).HasMaxLength(50);
             builder.Property(c => c.Phone).HasMaxLength(20);
             builder.Property(c => c.Email).HasMaxLength(100);

@@ -26,6 +26,7 @@ cd %1.Application
 ..\fart Common\Behaviors\ValidatorBehavior.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Common\Exceptions\BadRequestException.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Common\Exceptions\NotFoundException.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Common\Interfaces\IApplicationDbContext.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart Notifications\EmailNotifications\SendEmailNotification.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Notifications\EmailNotifications\SendEmailNotificationHandler.cs "%DEFAULT_PROJECT%." "%1."
@@ -35,10 +36,9 @@ cd %1.Application
 ..\fart Queries\UserQueries\GetAllUserQuery\GetAllUserMapper.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Queries\UserQueries\GetAllUserQuery\GetAllUserResponse.cs "%DEFAULT_PROJECT%." "%1."
 
-..\fart Repositories\IBaseRepository.cs "%DEFAULT_PROJECT%." "%1."
-..\fart Repositories\IUnitOfWork.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Repositories\IUserRepository.cs "%DEFAULT_PROJECT%." "%1."
 
+..\fart GlobalUsings.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart ServiceExtensions.cs "%DEFAULT_PROJECT%." "%1."
 
 ren %DEFAULT_PROJECT%.Application.csproj %1%.Application.csproj
@@ -53,6 +53,8 @@ cd %1.Domain
 ..\fart %DEFAULT_PROJECT%.Domain.csproj "<AssemblyName>%DEFAULT_PROJECT%." "<AssemblyName>%1."
 
 ..\fart Common\BaseEntity.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Common\BaseAuditableEntity.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Common\BaseEvent.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Entities\User.cs "%DEFAULT_PROJECT%." "%1."
 
 ren %DEFAULT_PROJECT%.Domain.csproj %1%.Domain.csproj
@@ -93,12 +95,15 @@ cd %1.Persistence
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "<AssemblyName>%DEFAULT_PROJECT%." "<AssemblyName>%1."
 ..\fart %DEFAULT_PROJECT%.Persistence.csproj "%DEFAULT_PROJECT%.Application" "%1.Application"
 
+..\fart Common\MediatorExtensions.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart Context\DataContext.cs "%DEFAULT_PROJECT%." "%1."
 ..\fart Context\DataContextSeed.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart EntityConfiguration\UserEntityConfiguration.cs "%DEFAULT_PROJECT%." "%1."
 
-..\fart Repositories\BaseRepository.cs "%DEFAULT_PROJECT%." "%1."
+..\fart Interceptors\AuditableEntitySaveChangesInterceptor.cs "%DEFAULT_PROJECT%." "%1."
+
 ..\fart Repositories\UserRepository.cs "%DEFAULT_PROJECT%." "%1."
 
 ..\fart GlobalUsings.cs "%DEFAULT_PROJECT%." "%1."

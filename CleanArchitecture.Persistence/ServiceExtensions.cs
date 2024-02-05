@@ -1,10 +1,13 @@
-﻿using CleanArchitecture.Application.Repositories;
+﻿using CleanArchitecture.Application.Common.Interfaces;
+
 namespace CleanArchitecture.Persistence;
 
 public static class ServiceExtensions
 {
     public static void ConfigurePersistence(this IServiceCollection services, IConfiguration configuration, bool isDevelopment)
     {
+        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+
         services.AddDbContext<DataContext>((IServiceProvider sp, DbContextOptionsBuilder builder) =>
         {
             //string connectionName = sp.IsInDocker() ? "Docker" : "Default"; Use Library to refence
@@ -14,6 +17,8 @@ public static class ServiceExtensions
             builder.EnableDetailedErrors(isDevelopment);
             builder.EnableSensitiveDataLogging(isDevelopment);
         });
+
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<DataContext>());
 
         services.AddScoped<IUserRepository, UserRepository>();
     }

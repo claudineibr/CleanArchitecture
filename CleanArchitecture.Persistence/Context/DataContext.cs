@@ -1,14 +1,22 @@
-﻿namespace CleanArchitecture.Persistence.Context;
+﻿using CleanArchitecture.Application.Common.Interfaces;
 
-public class DataContext : DbContext, IUnitOfWork
+namespace CleanArchitecture.Persistence.Context;
+
+public class DataContext : DbContext, IApplicationDbContext
 {
     public DbSet<User> User { get; set; }
 
     private readonly IMediator _mediator;
+    private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
-    public DataContext(DbContextOptions<DataContext> options, IMediator mediator) : base(options)
+
+    public DataContext(
+        DbContextOptions<DataContext> options,
+        IMediator mediator,
+        AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
     {
         _mediator = mediator;
+        _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -17,10 +25,14 @@ public class DataContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
     }
 
-    public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //await _mediator.DispatchDomainEvents(this);
-        _ = await base.SaveChangesAsync(cancellationToken);
-        return true;
+        optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await _mediator.DispatchDomainEvents(this);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }
