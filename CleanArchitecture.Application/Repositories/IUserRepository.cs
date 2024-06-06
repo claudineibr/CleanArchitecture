@@ -1,5 +1,4 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Repositories;
 

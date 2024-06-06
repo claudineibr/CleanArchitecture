@@ -1,6 +1,4 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-
-namespace CleanArchitecture.Persistence;
+﻿namespace CleanArchitecture.Persistence;
 
 public static class ServiceExtensions
 {
@@ -10,15 +8,15 @@ public static class ServiceExtensions
 
         services.AddDbContext<DataContext>((IServiceProvider sp, DbContextOptionsBuilder builder) =>
         {
-            //string connectionName = sp.IsInDocker() ? "Docker" : "Default"; Use Library to refence
+            //string connectionString = sp.GetConnectionString(configuration);
+            //builder.UseNpgsql(connectionString);
+
             string connectionName = configuration.GetConnectionString("Default");
             builder.UseNpgsql(configuration.GetConnectionString(connectionName));
             builder.LogTo(Console.WriteLine, LogLevel.Information);
             builder.EnableDetailedErrors(isDevelopment);
             builder.EnableSensitiveDataLogging(isDevelopment);
         });
-
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<DataContext>());
 
         services.AddScoped<IUserRepository, UserRepository>();
     }

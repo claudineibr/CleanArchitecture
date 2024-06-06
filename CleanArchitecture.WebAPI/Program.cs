@@ -69,14 +69,11 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 var app = builder.Build();
-
-var pathBase = app.Configuration["PATH_BASE"];
-
 //app.UseServiceDefaults();
 
 app.UseSwagger().UseSwaggerUI(setup =>
 {
-    setup.SwaggerEndpoint($"{(!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty)}/swagger/v1/swagger.json", "Service.API V1");
+    setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Service.API V1");
     setup.OAuthAppName("Management Swagger UI");
 });
 
@@ -97,15 +94,18 @@ app.MapControllers();
 
 try
 {
-    app.Logger.LogInformation("Configuring web host ({ApplicationContext})...", AppName);
+    app.Logger.LogInformation("Starting web host ({ApplicationName} - EnvironmentName: {EnvironmentName}", AppName, builder.Environment.EnvironmentName);
     var serviceScope = app.Services.CreateScope();
     var dataContext = serviceScope.ServiceProvider.GetService<DataContext>();
+    app.Logger.LogInformation("Start MigrateAsync");
     dataContext?.Database.MigrateAsync();
-    app.Logger.LogInformation("Starting web host ({ApplicationName})...", AppName);
+    app.Logger.LogInformation("End MigrateAsync");
     var logger = app.Services.GetService<ILogger<DataContextSeed>>();
-    
+    app.Logger.LogInformation("Start SeedAsync");
     await new DataContextSeed().SeedAsync(context: dataContext, logger: logger);
+    app.Logger.LogInformation("End SeedAsync");
     await app.RunAsync();
+    app.Logger.LogInformation("Running web host ({ApplicationName} - EnvironmentName: {EnvironmentName}", AppName, builder.Environment.EnvironmentName);
 
     return 0;
 }
